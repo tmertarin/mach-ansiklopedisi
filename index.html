@@ -183,9 +183,7 @@
                 const matchesGen = selectedGeneration === 'all' || plane.generation.includes(selectedGeneration);
                 
                 return matchesSearch && matchesGen;
-            });
-
-            // 2. Sıralama İşlemi
+            })
             if (selectedSort === 'az') {
                 processedData.sort((a, b) => a.name.localeCompare(b.name));
             } else if (selectedSort === 'za') {
