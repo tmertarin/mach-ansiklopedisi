@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uçak Detayı - Mach Ansiklopedisi</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="referrer" content="no-referrer">
+    <style>
+        /* Bu sayfaya özel interaktif buton tasarımları */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .tactical-btn {
+            background: rgba(14, 165, 233, 0.1);
+            color: #0ea5e9;
+            border: 1px solid #0ea5e9;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tactical-btn:hover {
+            background: #0ea5e9;
+            color: #0b1120;
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Yazdırma (Print) modunda gereksiz yerleri gizleme */
+        @media print {
+            header, .action-buttons, .back-btn { display: none !important; }
+            body { background: white; color: black; }
+            .content-section { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+            .spec-item, .weapons-box { background: transparent; border: 1px solid #eee; }
+            * { color: black !important; text-shadow: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="back-btn">← Ana Sayfaya Dön</a>
+            <h1 style="margin: 0; font-size: 2.2rem;">Mach Ansiklopedisi</h1>
+            <div style="width: 150px;"></div> 
+        </div>
+    </header>
+
+    <main class="detail-container" id="detail-content">
+        <p style="text-align: center; color: #94a3b8; margin-top: 3rem;">Şifreli Bağlantı Kuruluyor... Veriler Yükleniyor...</p>
+    </main>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const planeId = urlParams.get('id');
+        const contentDiv = document.getElementById('detail-content');
+
+        // Link Kopyalama Fonksiyonu
+        function copyTacticalLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = document.getElementById('copyBtn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = "✅ Kopyalandı!";
+                btn.style.background = "#10b981";
+                btn.style.color = "#0b1120";
+                btn.style.borderColor = "#10b981";
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = "";
+                    btn.style.color = "";
+                    btn.style.borderColor = "";
+                }, 2000);
+            });
+        }
+
+        // Veriyi JSON dosyasından çekiyoruz
+        fetch('planes.json')
+            .then(response => {
+                if (!response.ok) throw new Error("Ağ hatası");
+                return response.json();
+            })
+            .then(data => {
+                const plane = data.find(p => p.id === planeId);
+
+                if (plane) {
+                    document.title = `${plane.name} - Taktik Dosya`;
+                    
+                    contentDiv.innerHTML = `
+                        <div class="detail-header">
+                            <img src="${plane.countryFlag}" alt="${plane.country}" class="flag-icon">
+                            <h1 class="plane-title">${plane.name}</h1>
+                            <p class="plane-subtitle">${plane.fullName} | ${plane.type}</p>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button onclick="window.print()" class="tactical-btn">
+                                🖨️ Taktik Dosyayı Yazdır
+                            </button>
+                            <button onclick="copyTacticalLink()" id="copyBtn" class="tactical-btn">
+                                🔗 Bağlantıyı Kopyala
+                            </button>
+                        </div>
+
+                        <img src="${plane.mainImage}" alt="${plane.name}" class="main-image">
+
+                        <div class="content-section">
+                            <h2>Teknik Özet</h2>
+                            <p class="summary-text">${plane.techSummary}</p>
+                        </div>
+
+                        <div class="content-section">
+                            <h2>Fiziksel Boyutlar</h2>
+                            <div class="specs-grid">
+                                <div class="spec-item"><span class="spec-label">Uzunluk:</span> ${plane.dimensions.length}</div>
+                                <div class="spec-item"><span class="spec-label">Kanat Açıklığı:</span> ${plane.dimensions.wingspan}</div>
+                                <div class="spec-item"><span class="spec-label">Yükseklik:</span> ${plane.dimensions.height}</div>
+                                <div class="spec-item"><span class="spec-label">Boş Ağırlık:</span> ${plane.dimensions.emptyWeight}</div>
+                                <div class="spec-item"><span class="spec-label">Maks. Kalkış Ağırlığı:</span> ${plane.dimensions.maxTakeoffWeight}</div>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <h2>Uçuş Performansı</h2>
+                            <div class="specs-grid">
+                                <div class="spec-item"><span class="spec-label">Maks. Hız:</span> ${plane.performance.topSpeed}</div>
+                                <div class="spec-item"><span class="spec-label">Supercruise:</span> ${plane.performance.supercruise}</div>
+                                <div class="spec-item"><span class="spec-label">Harekat Yarıçapı:</span> ${plane.performance.combatRadius}</div>
+                                <div class="spec-item"><span class="spec-label">Maks. İrtifa:</span> ${plane.performance.maxAltitude}</div>
+                                <div class="spec-item"><span class="spec-label">Tırmanma Oranı:</span> ${plane.performance.rateOfClimb}</div>
+                                <div class="spec-item"><span class="spec-label">G-Limiti:</span> ${plane.performance.gLimit}</div>
+                                <div class="spec-item"><span class="spec-label">İtki/Ağırlık Oranı:</span> ${plane.performance.thrustToWeight}</div>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <h2>Aviyonik & Sensörler</h2>
+                            <div class="weapons-box" style="background: rgba(14, 165, 233, 0.05); border-color: #0ea5e9;">
+                                <ul>
+                                    <li><span class="spec-label" style="display:inline; color:#0ea5e9;">Radar:</span> ${plane.avionics.radar}</li>
+                                    <li><span class="spec-label" style="display:inline; color:#0ea5e9;">Elektronik Harp:</span> ${plane.avionics.electronicWarfare}</li>
+                                    <li><span class="spec-label" style="display:inline; color:#0ea5e9;">Radar Kesit Alanı (RCS):</span> ${plane.avionics.rcs}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <h2>Silah Sistemleri</h2>
+                            <div class="weapons-box">
+                                <p><span class="spec-label">İstasyonlar / Kapasite:</span> ${plane.armaments.hardpoints}</p>
+                                <p style="margin-top: 10px;"><span class="spec-label">Dahili Top:</span> ${plane.armaments.guns}</p>
+                                
+                                <h4 style="color: #f8fafc; margin-top: 15px; border-bottom: 1px solid #334155; padding-bottom: 5px;">Hava-Hava Mühimmatları</h4>
+                                <ul>
+                                    ${plane.armaments.airToAir.map(bomb => `<li>${bomb}</li>`).join('')}
+                                </ul>
+
+                                <h4 style="color: #f8fafc; margin-top: 15px; border-bottom: 1px solid #334155; padding-bottom: 5px;">Hava-Yer Mühimmatları</h4>
+                                <ul>
+                                    ${plane.armaments.airToGround.map(bomb => `<li>${bomb}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <h2>Önemli Operasyonlar</h2>
+                            <p style="font-style: italic; color: #cbd5e1; font-size: 1.1rem; line-height: 1.8;">${plane.notableMissions}</p>
+                        </div>
+
+                        <div class="content-section">
+                            <h2>Galeri</h2>
+                            <div class="gallery-grid">
+                                <img src="${plane.cockpitImage}" alt="Kokpit" class="gallery-image">
+                                <img src="${plane.weaponsBayImage}" alt="Silah Bölmesi" class="gallery-image">
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    contentDiv.innerHTML = `<h1 style="text-align:center; color:#ef4444; margin-top:5rem;">Sistem Hatası: Uçak kaydı bulunamadı.</h1>`;
+                }
+            })
+            .catch(error => {
+                console.error('Veri çekme hatası:', error);
+                contentDiv.innerHTML = `<h1 style="text-align:center; color:#ef4444; margin-top:5rem;">Güvenli ağa bağlanılamadı. Lütfen sunucunuzu kontrol edin.</h1>`;
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+[
+    {
+        "id": "f22-raptor",
+        "name": "F-22 Raptor",
+        "fullName": "Lockheed Martin F-22 Raptor",
+        "country": "ABD",
+        "countryFlag": "pictures/flag-usa.svg",
+        "type": "Hayalet Hava Üstünlüğü Uçağı",
+        "generation": "5. Nesil",
+        "role": "Hava Üstünlüğü",
+        "mainImage": "pictures/f22-main.jpg",
+        "cockpitImage": "pictures/f22-cockpit.jpg",
+        "weaponsBayImage": "pictures/f22-weapons.jpg",
+        "techSummary": "F-22 Raptor, süper seyir (supercruise), görünmezlik ve itki yönlendirme (thrust vectoring) özelliklerini birleştiren, dünyanın en ölümcül it dalaşı uçağıdır.",
+        "specs": { 
+            "crew": 1, 
+            "firstFlight": "7 Eylül 1997", 
+            "unitCost": "~$150 Milyon", 
+            "engines": "2 × Pratt & Whitney F119-PW-100 (İtki Yönlendirmeli)"
+        },
+        "dimensions": {
+            "length": "18.92 m",
+            "wingspan": "13.56 m",
+            "height": "5.08 m",
+            "emptyWeight": "19,700 kg",
+            "maxTakeoffWeight": "38,000 kg"
+        },
+        "performance": {
+            "topSpeed": "Mach 2.25 (2,414 km/s)",
+            "supercruise": "Mach 1.82 (Artyakıcı kullanmadan)",
+            "range": "2,960 km (Ek yakıt tankları ile)",
+            "combatRadius": "850 km",
+            "maxAltitude": "65,000 ft (20,000 m)",
+            "rateOfClimb": "62,000 ft/dk (315 m/s)",
+            "gLimit": "+9.0 / -3.0 G",
+            "thrustToWeight": "1.08"
+        },
+        "avionics": {
+            "radar": "AN/APG-77 AESA Radar (250+ km menzil)",
+            "electronicWarfare": "AN/ALR-94 Radar Uyarı Alıcısı",
+            "rcs": "~0.0001 m² (Bir bilye tanesi kadar radar izi)"
+        },
+        "armaments": { 
+            "guns": "1 × 20mm M61A2 Vulcan top (480 mermi)",
+            "hardpoints": "4 dahili silah bölmesi, 4 harici istasyon",
+            "airToAir": ["6 × AIM-120C/D AMRAAM", "2 × AIM-9M/X Sidewinder"],
+            "airToGround": ["2 × 1,000 lb JDAM", "8 × 250 lb GBU-39"]
+        },
+        "notableMissions": "Suriye hava sahası devriyeleri (2014-Günümüz), Çin casus balonunu düşürme (2023)."
+    },
+    {
+        "id": "kaan",
+        "name": "TUSAŞ KAAN",
+        "fullName": "Milli Muharip Uçak (MMU) - KAAN",
+        "country": "Türkiye",
+        "countryFlag": "pictures/flag-turkey.svg",
+        "type": "Hayalet Çok Rollü Savaş Uçağı",
+        "generation": "5. Nesil",
+        "role": "Hava Üstünlüğü / Çok Rollü",
+        "mainImage": "pictures/kaan-main.jpg",
+        "cockpitImage": "pictures/kaan-cockpit.jpg",
+        "weaponsBayImage": "pictures/kaan-weapons.jpg",
+        "techSummary": "Türkiye'nin yerli imkanlarla geliştirdiği, düşük radar kesit alanına (stealth) sahip, yapay zeka destekli 5. nesil milli muharip uçağıdır.",
+        "specs": { 
+            "crew": 1, 
+            "firstFlight": "21 Şubat 2024", 
+            "unitCost": "Geliştirme Aşamasında", 
+            "engines": "2 × GE F110-GE-129 (Prototip)"
+        },
+        "dimensions": {
+            "length": "21.00 m",
+            "wingspan": "14.00 m",
+            "height": "6.00 m",
+            "emptyWeight": "Bilinmiyor",
+            "maxTakeoffWeight": "27,215+ kg"
+        },
+        "performance": {
+            "topSpeed": "Mach 1.8+",
+            "supercruise": "Hedefleniyor",
+            "range": "Açıklanmadı",
+            "combatRadius": "Açıklanmadı",
+            "maxAltitude": "55,000+ ft",
+            "rateOfClimb": "Açıklanmadı",
+            "gLimit": "+9.0 / -3.5 G",
+            "thrustToWeight": "Açıklanmadı"
+        },
+        "avionics": {
+            "radar": "ASELSAN BÜRFKS (AESA)",
+            "electronicWarfare": "ASELSAN KARAKULAK",
+            "rcs": "Düşük Gözlemlenebilir (Stealth)"
+        },
+        "armaments": { 
+            "guns": "Dahili Top Sistemi",
+            "hardpoints": "Gövde İçi ve Kanat Altı İstasyonlar",
+            "airToAir": ["GÖKTUĞ Serisi (Bozdoğan ve Gökdoğan)"],
+            "airToGround": ["SOM Seyir Füzesi", "HGK/KGK Mühimmatlar", "MAM-T"]
+        },
+        "notableMissions": "21 Şubat 2024 - Başarılı ilk test uçuşu."
+    },
+    {
+        "id": "b2-spirit",
+        "name": "B-2 Spirit",
+        "fullName": "Northrop Grumman B-2 Spirit",
+        "country": "ABD",
+        "countryFlag": "pictures/flag-usa.svg",
+        "type": "Hayalet Stratejik Ağır Bombardıman Uçağı",
+        "generation": "5. Nesil",
+        "role": "Stratejik Bombardıman",
+        "mainImage": "pictures/b2-main.jpg",
+        "cockpitImage": "pictures/b2-cockpit.jpg",
+        "weaponsBayImage": "pictures/b2-weapons.jpg",
+        "techSummary": "B-2 Spirit, 'Uçan Kanat' aerodinamiği sayesinde dikey dengeleyicilere (kuyruk) sahip değildir. Bu eşsiz tasarım onu radarlara karşı neredeyse görünmez kılar.",
+        "specs": { 
+            "crew": 2, 
+            "firstFlight": "17 Temmuz 1989", 
+            "unitCost": "~$2 Milyar", 
+            "engines": "4 × General Electric F118-GE-100"
+        },
+        "dimensions": {
+            "length": "21.0 m",
+            "wingspan": "52.4 m",
+            "height": "5.18 m",
+            "emptyWeight": "71,700 kg",
+            "maxTakeoffWeight": "170,600 kg"
+        },
+        "performance": {
+            "topSpeed": "Mach 0.95 (1,010 km/s)",
+            "supercruise": "Yok",
+            "range": "11,100 km",
+            "combatRadius": "Sınırsız (Havada yakıt ikmali ile)",
+            "maxAltitude": "50,000 ft",
+            "rateOfClimb": "Gizli Veri",
+            "gLimit": "+4.5 G",
+            "thrustToWeight": "0.205"
+        },
+        "avionics": {
+            "radar": "AN/APQ-181 LPI Radarı",
+            "electronicWarfare": "Gelişmiş Karıştırıcılar",
+            "rcs": "~0.1 m² (Bir büyük kuş boyutunda)"
+        },
+        "armaments": { 
+            "guns": "Yok",
+            "hardpoints": "2 adet devasa dahili bomba bölmesi",
+            "airToAir": ["Yok"],
+            "airToGround": ["16 × B61 Nükleer Bomba", "80 × 500 lb JDAM", "2 × GBU-57 MOP (Delici)"]
+        },
+        "notableMissions": "Kosova Savaşı (1999), Irak Savaşı (2003), Libya Müdahalesi (2011)."
+    },
+    {
+        "id": "f16-falcon",
+        "name": "F-16 Fighting Falcon",
+        "fullName": "General Dynamics F-16C Block 50",
+        "country": "ABD",
+        "countryFlag": "pictures/flag-usa.svg",
+        "type": "Çok Rollü Avcı Uçağı",
+        "generation": "4. Nesil",
+        "role": "Çok Rollü",
+        "mainImage": "pictures/f16-main.jpg",
+        "cockpitImage": "pictures/f16-cockpit.jpg",
+        "weaponsBayImage": "pictures/f16-weapons.jpg",
+        "techSummary": "Dünya çapında en çok üretilen ve kullanılan 4. nesil jet. Mükemmel tasarımı ona inanılmaz bir çeviklik katar.",
+        "specs": { 
+            "crew": 1, 
+            "firstFlight": "20 Ocak 1974", 
+            "unitCost": "~$30 Milyon", 
+            "engines": "1 × GE F110-GE-129 Turbofan"
+        },
+        "dimensions": {
+            "length": "15.06 m",
+            "wingspan": "9.96 m",
+            "height": "4.88 m",
+            "emptyWeight": "8,570 kg",
+            "maxTakeoffWeight": "19,200 kg"
+        },
+        "performance": {
+            "topSpeed": "Mach 2.05 (2,120 km/s)",
+            "supercruise": "Yok",
+            "range": "4,220 km",
+            "combatRadius": "546 km",
+            "maxAltitude": "50,000+ ft",
+            "rateOfClimb": "50,000 ft/dk",
+            "gLimit": "+9.0 G",
+            "thrustToWeight": "1.095"
+        },
+        "avionics": {
+            "radar": "AN/APG-68(V)9 veya AN/APG-83 SABR (AESA)",
+            "electronicWarfare": "ALQ-211(V)4 Elektronik Harp Sistemi",
+            "rcs": "~1.2 m²"
+        },
+        "armaments": { 
+            "guns": "1 × 20mm M61A1 Vulcan Top (511 mermi)",
+            "hardpoints": "11 Harici İstasyon",
+            "airToAir": ["AIM-9 Sidewinder", "AIM-120 AMRAAM"],
+            "airToGround": ["AGM-65 Maverick", "JDAM", "HARM Anti-Radyasyon Füzesi"]
+        },
+        "notableMissions": "Bekaa Vadisi (1982), Çöl Fırtınası (1991), İttifak Gücü Operasyonu (1999)."
+    }
+]

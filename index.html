@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mach Ansiklopedisi</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="referrer" content="no-referrer">
+    <style>
+        /* Ana sayfaya özel ekstra stiller */
+        .stats-panel {
+            max-width: 1200px;
+            margin: 0 auto 1.5rem auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .stat-box {
+            background: rgba(15, 23, 32, 0.6);
+            border: 1px solid #1e293b;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            border-left: 3px solid #0ea5e9;
+        }
+
+        .stat-number {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f8fafc;
+            line-height: 1;
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            letter-spacing: 1px;
+        }
+
+        #sortFilter {
+            flex: 1;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            color: var(--text-main);
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            border-radius: 8px;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            transition: var(--transition-smooth);
+        }
+
+        #sortFilter:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <h1>Mach Ansiklopedisi</h1>
+            <p>Tarihten Günümüze Askeri Havacılık Veritabanı</p>
+        </div>
+    </header>
+
+    <div class="stats-panel" id="statsPanel">
+        <div class="stat-box">
+            <span class="stat-number" id="totalPlanes">0</span>
+            <span class="stat-label">Kayıtlı Uçak</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-number" id="fifthGenCount">0</span>
+            <span class="stat-label">5. Nesil Platform</span>
+        </div>
+        <div class="stat-box" style="border-left-color: #10b981;">
+            <span class="stat-number">Aktif</span>
+            <span class="stat-label">Sistem Durumu</span>
+        </div>
+    </div>
+
+    <div class="controls-container">
+        <input type="text" id="searchInput" placeholder="Uçak adı veya ülke ara... (Örn: F-22, ABD)">
+        
+        <select id="generationFilter">
+            <option value="all">Tüm Nesiller</option>
+            <option value="5. Nesil">5. Nesil (Hayalet)</option>
+            <option value="4. Nesil">4. Nesil</option>
+            <option value="Pervaneli">Pervaneli (WW2)</option>
+        </select>
+
+        <select id="sortFilter">
+            <option value="default">Varsayılan Sıralama</option>
+            <option value="az">İsim (A-Z)</option>
+            <option value="za">İsim (Z-A)</option>
+        </select>
+    </div>
+
+    <main id="plane-container" class="grid-container"></main>
+
+    <script>
+        const container = document.getElementById('plane-container');
+        const searchInput = document.getElementById('searchInput');
+        const generationFilter = document.getElementById('generationFilter');
+        const sortFilter = document.getElementById('sortFilter');
+
+        // Verileri tutacağımız global değişken
+        let planesData = [];
+
+        // JSON dosyasını çekme (Fetch API)
+        fetch('planes.json')
+            .then(response => {
+                if (!response.ok) throw new Error("Ağ hatası oluştu.");
+                return response.json();
+            })
+            .then(data => {
+                planesData = data; 
+                updateStats(); // İstatistikleri güncelle
+                renderPlanes(planesData); 
+            })
+            .catch(error => {
+                console.error('Veri çekilirken hata:', error);
+                container.innerHTML = `<p style="text-align:center; color:#ef4444; font-size:1.2rem; grid-column: 1 / -1;">Veritabanına bağlanılamadı. Lütfen Live Server kullandığınızdan emin olun.</p>`;
+            });
+
+        // Üst paneldeki istatistikleri güncelleyen fonksiyon
+        function updateStats() {
+            document.getElementById('totalPlanes').innerText = planesData.length;
+            const fifthGen = planesData.filter(p => p.generation.includes("5. Nesil")).length;
+            document.getElementById('fifthGenCount').innerText = fifthGen;
+        }
+
+        // Uçakları ekrana basan ana fonksiyon
+        function renderPlanes(planesToRender) {
+            container.innerHTML = '';
+            
+            if(planesToRender.length === 0) {
+                container.innerHTML = '<p style="text-align:center; width:100%; color:#94a3b8; font-size:1.2rem; grid-column: 1 / -1;">Aradığınız kritere uygun uçak bulunamadı.</p>';
+                return;
+            }
+
+            planesToRender.forEach(plane => {
+                const card = document.createElement('a');
+                card.href = `ucak-detay.html?id=${plane.id}`;
+                card.classList.add('plane-card');
+                card.style.textDecoration = 'none';
+
+                card.innerHTML = `
+                    <img src="${plane.mainImage}" alt="${plane.name}">
+                    <h2>${plane.name}</h2>
+                    <ul class="plane-info">
+                        <li><span>Ülke:</span> ${plane.country}</li>
+                        <li><span>Nesil:</span> ${plane.generation}</li>
+                        <li><span>Rol:</span> ${plane.role}</li>
+                    </ul>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Arama, Filtreleme ve Sıralama Mantığı
+        function applyFiltersAndSort() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedGeneration = generationFilter.value;
+            const selectedSort = sortFilter.value;
+
+            // 1. Filtreleme İşlemi
+            let processedData = planesData.filter(plane => {
+                const matchesSearch = plane.name.toLowerCase().includes(searchTerm) || 
+                                      plane.country.toLowerCase().includes(searchTerm);
+                const matchesGen = selectedGeneration === 'all' || plane.generation.includes(selectedGeneration);
+                
+                return matchesSearch && matchesGen;
+            });
+
+            // 2. Sıralama İşlemi
+            if (selectedSort === 'az') {
+                processedData.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (selectedSort === 'za') {
+                processedData.sort((a, b) => b.name.localeCompare(a.name));
+            }
+
+            // Ekrana bas
+            renderPlanes(processedData);
+        }
+
+        // Olay Dinleyicileri (Event Listeners)
+        searchInput.addEventListener('input', applyFiltersAndSort);
+        generationFilter.addEventListener('change', applyFiltersAndSort);
+        sortFilter.addEventListener('change', applyFiltersAndSort);
+    </script>
+</body>
+</html>

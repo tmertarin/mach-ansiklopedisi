@@ -1,0 +1,534 @@
+/* ==========================================================================
+   MACH ANSIKLOPEDISI - KUSURSUZ TASARIM DOSYASI (style.css)
+   ========================================================================== */
+
+/* --- 1. FONTLAR VE DEĞİŞKENLER --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Rajdhani:wght@500;600;700&display=swap');
+
+:root {
+    /* Renk Paleti - Askeri / Teknoloji Teması */
+    --bg-base: #0b1120;         /* En arka plan (Çok koyu lacivert/siyah) */
+    --bg-surface: #151e32;      /* Kartların arka planı */
+    --bg-surface-glass: rgba(21, 30, 50, 0.7); /* Buzlu cam arka plan */
+    
+    --accent-primary: #0ea5e9;  /* Taktiksel Mavi (Ana vurgu) */
+    --accent-glow: rgba(14, 165, 233, 0.4); /* Mavi parlama efekti */
+    --accent-secondary: #10b981; /* Başarı/Onay yeşili */
+    --accent-alert: #ef4444;    /* Uyarı/Silah Kırmızısı */
+    
+    --text-main: #f8fafc;       /* Ana metinler (Parlak beyaz) */
+    --text-muted: #94a3b8;      /* Alt metinler (Gri/Mavi) */
+    
+    --border-light: #1e293b;    /* İnce çerçeveler */
+    --border-focus: #38bdf8;    /* Seçili/Aktif çerçeveler */
+
+    /* Geçiş Süreleri */
+    --transition-fast: 0.1s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- 2. SIFIRLAMA VE TEMEL AYARLAR --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    /* İnce bir askeri ızgara (grid) arka plan deseni */
+    background-image: 
+        linear-gradient(rgba(30, 41, 59, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 41, 59, 0.3) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-attachment: fixed;
+}
+
+/* Özel Kaydırma Çubuğu (Scrollbar) */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+
+::selection { background-color: var(--accent-primary); color: #fff; }
+
+h1, h2, h3, h4 {
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* --- 3. HEADER VE NAVİGASYON --- */
+header {
+    background: var(--bg-surface-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    padding: 1.5rem 0;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    overflow: hidden; /* Radar efekti taşmasın diye */
+}
+
+/* YENİ: Header Radar Tarama Efekti */
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 30%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-secondary), transparent);
+    animation: radarScan 4s linear infinite;
+}
+
+@keyframes radarScan {
+    0% { left: -30%; }
+    100% { left: 130%; }
+}
+
+header h1 {
+    font-size: 2.8rem;
+    color: var(--accent-primary);
+    text-shadow: 0 0 15px var(--accent-glow);
+    margin-bottom: 0.2rem;
+}
+
+header p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+}
+
+.back-btn {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-smooth);
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+}
+
+.back-btn:hover {
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    background: rgba(14, 165, 233, 0.1);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.back-btn:active { transform: scale(0.95); } /* Tıklama Efekti */
+
+/* --- 4. ANA SAYFA: İSTATİSTİK PANELİ --- */
+.stats-panel {
+    max-width: 1200px;
+    margin: 0 auto 1.5rem auto;
+    padding: 0 2rem;
+    display: flex;
+    gap: 1.5rem;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.stat-box {
+    background: rgba(15, 23, 32, 0.6);
+    border: 1px solid var(--border-light);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    border-left: 3px solid var(--accent-primary);
+}
+
+.stat-number {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-main);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+/* --- 5. ARAMA VE FİLTRELEME --- */
+.controls-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    display: flex;
+    gap: 1.5rem;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+#searchInput, #generationFilter, #sortFilter {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    color: var(--text-main);
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    border-radius: 8px;
+    outline: none;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+#searchInput { flex: 2; }
+
+#generationFilter, #sortFilter {
+    flex: 1;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+}
+
+#searchInput:focus, #generationFilter:focus, #sortFilter:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 15px var(--accent-glow);
+    background-color: rgba(21, 30, 50, 0.9);
+}
+
+/* --- 6. ANA SAYFA - UÇAK KARTLARI (GRID) --- */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 0 2rem 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.plane-card {
+    background-color: var(--bg-surface);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--border-light);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.plane-card:nth-child(1) { animation-delay: 0.1s; }
+.plane-card:nth-child(2) { animation-delay: 0.2s; }
+.plane-card:nth-child(3) { animation-delay: 0.3s; }
+.plane-card:nth-child(4) { animation-delay: 0.4s; }
+
+.plane-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(14, 165, 233, 0.1), transparent);
+    transform: skewX(-25deg);
+    transition: 0.5s;
+    z-index: 1;
+}
+
+.plane-card:hover::before { left: 125%; }
+
+.plane-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-glow);
+}
+
+.plane-card:active { transform: translateY(-4px); } /* Tıklama Efekti */
+
+.plane-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 6px;
+    margin-bottom: 1.2rem;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: var(--transition-smooth);
+}
+
+.plane-card:hover img { filter: contrast(1.1) brightness(1.1); }
+
+.plane-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 0.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.plane-info { list-style: none; position: relative; z-index: 2; }
+.plane-info li {
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed rgba(148, 163, 184, 0.2);
+    padding-bottom: 0.3rem;
+}
+.plane-info span { font-weight: 500; color: var(--text-muted); }
+
+/* --- 7. UÇAK DETAY SAYFASI --- */
+.detail-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem 2rem;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.detail-header { text-align: center; margin-bottom: 2.5rem; position: relative; }
+
+.flag-icon {
+    height: 30px;
+    margin-right: 15px;
+    vertical-align: middle;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.plane-title {
+    font-size: 3.5rem;
+    display: inline-block;
+    vertical-align: middle;
+    text-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+.plane-subtitle {
+    font-size: 1.2rem;
+    color: var(--accent-primary);
+    margin-top: 0.5rem;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 2px;
+}
+
+/* Detay Sayfası Butonları (Yazdır / Kopyala) */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+}
+
+.tactical-btn {
+    background: rgba(14, 165, 233, 0.1);
+    color: var(--accent-primary);
+    border: 1px solid var(--accent-primary);
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tactical-btn:hover {
+    background: var(--accent-primary);
+    color: var(--bg-base);
+    box-shadow: 0 0 15px var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+.tactical-btn:active { transform: translateY(0); } /* Tıklama Efekti */
+
+.main-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    margin-bottom: 3rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.content-section {
+    margin-bottom: 3.5rem;
+    background: var(--bg-surface);
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.content-section::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: var(--accent-primary);
+    box-shadow: 0 0 10px var(--accent-primary);
+}
+
+.content-section h2 {
+    color: var(--accent-primary);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.content-section h2::before { content: '■'; font-size: 1rem; color: var(--text-muted); }
+
+.summary-text { font-size: 1.1rem; line-height: 1.8; }
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.spec-item {
+    background: rgba(15, 23, 32, 0.5);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    border-left: 2px solid var(--text-muted);
+    transition: var(--transition-fast);
+}
+
+.spec-item:hover {
+    border-left-color: var(--accent-primary);
+    background: rgba(14, 165, 233, 0.05);
+}
+
+.spec-label {
+    display: block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+}
+
+/* Silah Sistemleri Kutusu */
+.weapons-box {
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(30, 41, 59, 0.3),
+        rgba(30, 41, 59, 0.3) 10px,
+        rgba(15, 23, 32, 0.3) 10px,
+        rgba(15, 23, 32, 0.3) 20px
+    );
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.weapons-box ul { margin-top: 1rem; margin-left: 1rem; list-style-type: none; }
+.weapons-box li { margin-bottom: 0.8rem; position: relative; padding-left: 1.5rem; }
+.weapons-box li::before {
+    content: '⌖';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent-alert); 
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: var(--transition-smooth);
+    cursor: crosshair;
+}
+
+.gallery-image:hover {
+    transform: scale(1.03);
+    border-color: var(--accent-primary);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    z-index: 10;
+}
+
+/* --- 8. ANİMASYONLAR (Keyframes) --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* --- 9. YAZDIRMA (PRINT) STİLLERİ --- */
+@media print {
+    header, .action-buttons, .back-btn, .controls-container, .stats-panel { display: none !important; }
+    body { background: white; color: black; background-image: none; }
+    .content-section { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+    .spec-item, .weapons-box { background: transparent; border: 1px solid #eee; }
+    * { color: black !important; text-shadow: none !important; }
+}
+
+/* --- 10. MOBİL UYUMLULUK --- */
+@media (max-width: 768px) {
+    header h1 { font-size: 2rem; }
+    .header-inner { flex-direction: column; gap: 1rem; }
+    .stats-panel { flex-direction: column; gap: 0.5rem; }
+    .controls-container { flex-direction: column; }
+    .plane-title { font-size: 2.2rem; }
+    .content-section { padding: 1.5rem; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .action-buttons { flex-direction: column; }
+}
